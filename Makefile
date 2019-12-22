@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -std=c99 -pedantic
-OBJS = $(addprefix src/, main.o)
+CFLAGS = -Wall -Werror -Wextra -std=c99
+OBJS = $(addprefix src/, main.o board.o check_win.o)
 BIN = power4
 
 all: $(BIN)
