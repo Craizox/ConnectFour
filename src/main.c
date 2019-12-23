@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include "board.h"
 #include "check_win.h"
-
+#include <stdlib.h>
 
 static int ask_player_mov(char **board, char player)
 {
     char *buf;
     scanf("%ms", &buf);
-    return put_char_in_board(board, player, buf);
+    int res = put_char_in_board(board, player, buf);
+    free(buf);
+    return res;
 }
 
 static void ask_player_name(char **p1, char **p2)
@@ -67,6 +69,9 @@ int main(void)
             play = 1;
         else
             play = 0;
+        free(buf);
+        free(player1);
+        free(player2);
 
     board_free(board);
     }
