@@ -21,35 +21,54 @@ static void ask_player_name(char **p1, char **p2)
 
 int main(void)
 {
-    char *player1;
-    char *player2;
-    ask_player_name(&player1, &player2);
-    char **board = board_init();
-    board_print(board);
     int turn_play = 0;
     int win_p1 = 0, win_p2 = 0, full = 0;
-    while(!(win_p1 = check_win(board, 'o')) && !(win_p2 = check_win(board, 'x'))
-            && !(full = check_full(board)))
+    int play = 1;
+    while (play)
     {
-        if (turn_play % 2 == 0)
+        char *player1;
+        char *player2;
+        ask_player_name(&player1, &player2);
+        char **board = board_init();
+        board_print(board);
+        while(!(win_p1 = check_win(board, 'o')) && !(win_p2 = check_win(board, 'x'))
+                && !(full = check_full(board)))
         {
-            printf("Turn of %s: ", player1);
-            if (ask_player_mov(board, 'o'))
+            if (turn_play % 2 == 0)
             {
-                board_print(board);
-                turn_play++;
+                printf("Turn of %s: ", player1);
+                if (ask_player_mov(board, 'o'))
+                {
+                    board_print(board);
+                    turn_play++;
+                }
+            }
+            else
+            {
+                printf("Turn of %s: ", player2);
+                if (ask_player_mov(board, 'x'))
+                {
+                    board_print(board);
+                    turn_play++;
+                }
             }
         }
-        else
-        {
-            printf("Turn of %s: ", player2);
-            if (ask_player_mov(board, 'x'))
-            {
-                board_print(board);
-                turn_play++;
-            }
-        }
+        if (win_p1)
+            printf("%s WON\n", player1);
+        if (win_p2)
+            printf("%s WON\n", player2);
+        if (full)
+            printf("EGALITY\n");
 
+        printf("Do you want to play again [Y/n] ? ");
+        char *buf;
+        scanf("%ms", &buf);
+        if (buf[0] == 'Y' || buf[0] == 'y')
+            play = 1;
+        else
+            play = 0;
+
+    board_free(board);
     }
     return 0;
 }
