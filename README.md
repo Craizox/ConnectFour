@@ -9,7 +9,7 @@ $ cd ConnectFour
 $ make
 ```
 Then launch the installation script that will just move the executable to
-/usr/bin
+/usr/bin. The script will need the root permission to move the executable
 ```
-$ sudo ./install.sh
+$ ./install.sh
 ```
